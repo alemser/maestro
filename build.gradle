@@ -1,0 +1,55 @@
+buildscript {
+    ext.kotlin_version = '1.3.31'
+}
+plugins {
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.3.31'
+    id 'org.springframework.boot' version '2.1.3.RELEASE'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.31'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.3.31'
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'kotlin'
+
+group = 'com.alemser'
+version = '1.0-SNAPSHOT'
+description = 'Maestro'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url = 'https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases/' }
+    maven { url = 'http://repo.maven.apache.org/maven2' }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile 'com.alx:etx-api:1.0.0'
+    compile('org.springframework.boot:spring-boot-starter-webflux:2.1.4.RELEASE') {
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
+    compile 'org.activiti:activiti-spring-boot-starter:7.0.83'
+    compile 'com.h2database:h2:1.4.197'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test:2.1.4.RELEASE'
+
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = "1.8"
+    }
+}
+
